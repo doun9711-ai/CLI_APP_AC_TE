@@ -1,9 +1,8 @@
 package org.example;
 
-import org.example.motivation.entity.Motivation;
+import org.example.motivation.controller.MotivationController;
+import org.example.system.controller.SystemController;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -17,16 +16,15 @@ public class App {
     public void run() {
         System.out.println("== motivation 실행 ==");
 
-        int lastId = 0;
-
-        List<Motivation> motivations = new ArrayList<>();
+        SystemController systemController = new SystemController();
+        MotivationController motivationController = new MotivationController(sc);
 
         while (true) {
             System.out.print("명령어 ) ");
             String cmd = sc.nextLine().trim();
 
             if (cmd.equals("exit")) {
-                System.out.println("== motivation 종료 ==");
+                systemController.exit();
                 break;
             } else if (cmd.length() == 0) {
                 System.out.println("명령어가 입력되지 않았음");
@@ -34,37 +32,9 @@ public class App {
             }
 
             if (cmd.equals("add")) {
-                int id = lastId + 1;
-                System.out.print("body : ");
-                String body = sc.nextLine();
-                System.out.print("source : ");
-                String source = sc.nextLine();
-
-                Motivation motivation = new Motivation(id, body, source);
-
-                motivations.add(motivation);
-
-                System.out.printf("%d번 motivation이 등록되었습니다\n", id);
-                lastId++;
+                motivationController.add();
             } else if (cmd.equals("list")) {
-                System.out.println("=".repeat(40));
-                System.out.printf("   번호   /    source      /    body   \n");
-
-                if (motivations.size() == 0) {
-                    System.out.println("등록된거 없음 xxxxx");
-                    continue;
-                }
-                for (int i = motivations.size() - 1; i >= 0; i--) {
-                    Motivation motivation = motivations.get(i);
-
-                    if (motivation.getSource().length() > 7) {
-                        System.out.printf("   %d     /    %s   /    %s   \n", motivation.getId(), motivation.getSource().substring(0, 7) + "...", motivation.getBody());
-                        continue;
-                    }
-                    System.out.printf("   %d     /    %s     /    %s   \n", motivation.getId(), motivation.getSource(), motivation.getBody());
-                }
-                System.out.println("=".repeat(40));
-
+                motivationController.list();
             } else {
                 System.out.println("사용할 수 없는 명령어야");
             }

@@ -1,7 +1,6 @@
 package org.example.motivation.entity;
 
 public class Motivation {
-
     private int id;
     private String body;
     private String source;
