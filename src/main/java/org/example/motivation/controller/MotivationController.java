@@ -51,4 +51,58 @@ public class MotivationController {
         }
         System.out.println("=".repeat(40));
     }
+
+    //    public void delete(String cmd) {
+//        String[] cmdBits = cmd.split(" ");
+//        int id = Integer.parseInt(cmdBits[1]);
+//
+//        if (cmdBits.length == 1) {
+//            System.out.println("명령어 확인하고 다시 써");
+//            return;
+//        }
+//
+//        Motivation foundMotivation = null;
+//
+//        for (Motivation motivation : motivations) {
+//            if (motivation.getId() == id) {
+//                foundMotivation = motivation;
+//                break;
+//            }
+//        }
+//
+//        if (foundMotivation == null) {
+//            System.out.println("해당 moti는 ArrayList에 없던데?");
+//            return;
+//        }
+//
+//        motivations.remove(foundMotivation);
+//        System.out.println(id + "번 moti 삭제됨");
+//    }
+    public void delete(String cmd) {
+        String[] cmdBits = cmd.split(" ");
+        int id = Integer.parseInt(cmdBits[1]);
+
+        if (cmdBits.length == 1) {
+            System.out.println("명령어 확인하고 다시 써");
+            return;
+        }
+
+        int foundIndex = -1;
+
+        for (int i = 0; i < motivations.size(); i++) {
+            Motivation motivation = motivations.get(i);
+            if (motivation.getId() == id) {
+                foundIndex = i;
+                break;
+            }
+        }
+
+        if (foundIndex == -1) {
+            System.out.println("해당 moti는 ArrayList에 없던데?");
+            return;
+        }
+
+        motivations.remove(foundIndex);
+        System.out.println(id + "번 moti 삭제됨");
+    }
 }
