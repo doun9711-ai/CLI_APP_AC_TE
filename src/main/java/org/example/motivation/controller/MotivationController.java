@@ -2,9 +2,7 @@ package org.example.motivation.controller;
 
 import org.example.motivation.entity.Motivation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class MotivationController {
 
@@ -52,32 +50,6 @@ public class MotivationController {
         System.out.println("=".repeat(40));
     }
 
-    //    public void delete(String cmd) {
-//        String[] cmdBits = cmd.split(" ");
-//        int id = Integer.parseInt(cmdBits[1]);
-//
-//        if (cmdBits.length == 1) {
-//            System.out.println("명령어 확인하고 다시 써");
-//            return;
-//        }
-//
-//        Motivation foundMotivation = null;
-//
-//        for (Motivation motivation : motivations) {
-//            if (motivation.getId() == id) {
-//                foundMotivation = motivation;
-//                break;
-//            }
-//        }
-//
-//        if (foundMotivation == null) {
-//            System.out.println("해당 moti는 ArrayList에 없던데?");
-//            return;
-//        }
-//
-//        motivations.remove(foundMotivation);
-//        System.out.println(id + "번 moti 삭제됨");
-//    }
     public void delete(String cmd) {
         String[] cmdBits = cmd.split(" ");
         int id = Integer.parseInt(cmdBits[1]);
@@ -86,13 +58,14 @@ public class MotivationController {
             System.out.println("명령어 확인하고 다시 써");
             return;
         }
-
+        Motivation foundMotivation = null;
         int foundIndex = -1;
 
         for (int i = 0; i < motivations.size(); i++) {
             Motivation motivation = motivations.get(i);
             if (motivation.getId() == id) {
                 foundIndex = i;
+                foundMotivation = motivation;
                 break;
             }
         }
@@ -104,5 +77,32 @@ public class MotivationController {
 
         motivations.remove(foundIndex);
         System.out.println(id + "번 moti 삭제됨");
+    }
+
+    public void newDelete(String cmd) {
+        Rq rq = new Rq(cmd);
+
+        System.out.println("rq.getParams(\"id\") : " + rq.getParams("id"));
+
+        int id = Integer.parseInt(rq.getParams("id"));
+
+        Motivation foundMotivation = null;
+
+        for (int i = 0; i < motivations.size(); i++) {
+            Motivation motivation = motivations.get(i);
+            if (motivation.getId() == id) {
+                foundMotivation = motivation;
+                break;
+            }
+        }
+
+        if (foundMotivation == null) {
+            System.out.println("해당 moti는 ArrayList에 없던데?");
+            return;
+        }
+
+        motivations.remove(foundMotivation);
+        System.out.println(id + "번 moti 삭제됨");
+
     }
 }
