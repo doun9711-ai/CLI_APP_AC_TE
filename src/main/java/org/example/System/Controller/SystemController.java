@@ -1,4 +1,4 @@
-package org.example.system.controller;
+package org.example.System.Controller;
 
 public class SystemController {
     public void exit() {
